@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 
 import "./App.css";
 
@@ -15,7 +15,11 @@ import "./App.css";
 // }
 
 const App = () => {
-  const [counter,setCounter] = useState(0);
+  const [counter, setCounter] = useState(0);
+  
+  useEffect(() => {
+    alert("You have change the counter to " + counter)
+  }, [counter]);
 
   return (
     <div className="App">
