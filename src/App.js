@@ -1,40 +1,81 @@
-import { useState,useEffect } from 'react';
+import React from 'react';
+import {useState, useEffect } from 'react';
 
-import "./App.css";
+import MovieCard from './MovieCard'
 
-// Use of props and components
-// const Person=(props)=>{
-//   return (
-//     <>
-//       <h1>Name: { props.name}</h1>
-//       <h2>Last Name: { props.lastName}</h2>
-//       <h2>Age: { props.age}</h2>
-//     </>
+import './App.css';  
+import SearchIcon from './search.svg'
 
-//   )
-// }
+//  bcc23a0d
+
+const movie1= {
+    "Title": "Superman, Spiderman or Batman",
+    "Year": "2011",
+    "imdbID": "tt2084949",
+    "Type": "movie",
+    "Poster": "https://m.media-amazon.com/images/M/MV5BMjQ4MzcxNDU3N15BMl5BanBnXkFtZTgwOTE1MzMxNzE@._V1_SX300.jpg"
+}
+
+const API_URL = 'http://www.omdbapi.com?apikey=bcc23a0d';
+
+
 
 const App = () => {
-  const [counter, setCounter] = useState(0);
-  
-  useEffect(() => {
-    alert("You have change the counter to " + counter)
-  }, [counter]);
 
-  return (
-    <div className="App">
-      {/* <Person name={'John'} lastName={'Doe'} age={30} />
-      <Person name="Peter" lastName="Maina" age={ 75} />
-      <Person/>
-    <h1>Hello, React</h1> */}
-      
+    const [movies, setMovies] = useState([])
+const [searchTerm, setSearchTerm] = useState('')
 
-      <button onClick={() => setCounter((prevCount) =>prevCount -1)}>-</button>
-      <h1>{ counter}</h1>
-      <button onClick={() => setCounter((prevCount) =>prevCount +1)}>+</button>
+    const searchMovies = async (title) => {
+        const response = await fetch(`${API_URL}&s=${title}`);
+        const data = await response.json();
+        setMovies(data.Search);
+    }
 
-  </div>
-  );
-};
+
+    useEffect(() => {
+    searchMovies('Spiderman')
+},[])
+
+    return (
+        <div className="app">
+            <h1>MovieLand</h1>
+            
+            <div className="search">
+                <input
+                    placeholder='Search for Movies'
+                    type="text"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <img
+                    src={SearchIcon}
+                    alt="search"
+                    onClick={() => searchMovies(searchTerm)}
+                />
+            </div>
+
+            {
+                movies?.length > 0 ?
+                    (
+                        <div className="container">
+                            {
+                                movies.map((movie) => (
+                                    <MovieCard movie={movie} />
+                                    ))    
+                            }
+                        </div>  
+                    ) :
+                    (
+                        <div className="empty">
+                            <h2>No movies found</h2>
+                        </div>
+                    )
+            }
+
+           
+
+        </div>
+    )
+}
 
 export default App;
