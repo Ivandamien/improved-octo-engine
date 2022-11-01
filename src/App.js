@@ -8,13 +8,7 @@ import SearchIcon from './search.svg'
 
 //  bcc23a0d
 
-const movie1= {
-    "Title": "Superman, Spiderman or Batman",
-    "Year": "2011",
-    "imdbID": "tt2084949",
-    "Type": "movie",
-    "Poster": "https://m.media-amazon.com/images/M/MV5BMjQ4MzcxNDU3N15BMl5BanBnXkFtZTgwOTE1MzMxNzE@._V1_SX300.jpg"
-}
+
 
 const API_URL = 'http://www.omdbapi.com?apikey=bcc23a0d';
 
@@ -33,7 +27,7 @@ const [searchTerm, setSearchTerm] = useState('')
 
 
     useEffect(() => {
-    searchMovies('Spiderman')
+    searchMovies('Superman')
 },[])
 
     return (
